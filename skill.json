@@ -1,0 +1,54 @@
+{
+  "name": "genpark-agent-mesh-state-blackboard-deconfliction-skill",
+  "version": "1.0.0",
+  "description": "Universal Multi-Agent Mesh State Blackboard & Conflict Deconfliction Engine. Coordinates shared multi-agent state spaces, detects concurrent mutation race conditions, executes vector clock synchronization, and resolves conflicting decisions using consensus arbitration.",
+  "tools": [
+    {
+      "name": "manage_mesh_blackboard_state",
+      "description": "Multi-agent blackboard coordination: propose state mutations, detect concurrent write collisions, synchronize vector clocks, and arbitrate competing agent goals.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "propose_state_mutation",
+              "read_shared_state",
+              "acquire_resource_lock",
+              "release_resource_lock",
+              "get_blackboard_telemetry"
+            ],
+            "description": "Blackboard operation to perform."
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "Calling agent identifier."
+          },
+          "state_key": {
+            "type": "string",
+            "description": "Key in shared blackboard."
+          },
+          "proposed_value": {
+            "type": "object",
+            "description": "Proposed new value."
+          },
+          "expected_version": {
+            "type": "integer",
+            "description": "Optimistic concurrency version expected."
+          },
+          "lock_resource_id": {
+            "type": "string",
+            "description": "Resource ID to lock (e.g. flight_seat, budget_pool)."
+          },
+          "lease_seconds": {
+            "type": "number",
+            "description": "Lock lease duration in seconds."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ]
+}
